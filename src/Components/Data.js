@@ -1,36 +1,12 @@
 import React, { useContext ,useState } from 'react';
 import { UserContext } from './Contextform';
 import { Link } from 'react-router-dom';
-import UserModal from './UserModal';
-
-
 function Data() {
-  const { users,updateUser,deleteUser } = useContext(UserContext);
-
-//   const deleteUser = (index) => {
-//     const updatedUsers = [...users]; 
-//     updatedUsers.splice(index, 1); 
-//     setUsers(updatedUsers); 
-
-// };
-const [isModalOpen, setModalOpen] = useState(false);
-const [selectedUser, setSelectedUser] = useState(null);
-
+  const { users,deleteUser, setSelectedUser, setModalOpen} = useContext(UserContext);
 const handleUpdateClick = (user) => {
   setSelectedUser(user);
   setModalOpen(true);
 };
-
-const handleCloseModal = () => {
-  setModalOpen(false);
-  setSelectedUser(null);
-};
-const handleSaveUser = (updatedUser) => {
-    updateUser(updatedUser);
-    handleCloseModal();
-  };
-
-  
   return (
     <div className="container mx-auto">
     <div className='flex'>
@@ -47,9 +23,7 @@ const handleSaveUser = (updatedUser) => {
                         <th className="px-3 py-2">Email</th>
                         <th className='px-4 py-2'>Phone</th>
                         <th className='px-4 py-2'>Password</th>
-                        
-
-                    </tr>
+        </tr>
                 </thead>
                 <tbody>
                     {users.map((user,index) => (
@@ -61,22 +35,13 @@ const handleSaveUser = (updatedUser) => {
                             <td className="border px-4 py-2">{user.phone}</td>
                             <td className="border px-4 py-2">{user.password}</td>
                             <td className='px-4 py-2 cursor-pointer text-red-600'  onClick={() => deleteUser(user.userid)}>Delete</td>
-                            <td className='px-4 py-2 cursor-pointer text-green-500' onClick={() => handleUpdateClick(user,index)}>Update</td>
+                            <td className='px-4 py-2 cursor-pointer text-green-500' onClick={() => handleUpdateClick(user)} ><Link to="/">Update</Link></td>
                         </tr>
                         
                     ))}
                 </tbody>
             </table>
-            {isModalOpen && (
-        <UserModal
-          user={selectedUser}
-          onClose={handleCloseModal}
-          onSave={handleSaveUser}
-        />
-      )}
-            
-        </div>
+            </div>
   );
 }
-
 export default Data;

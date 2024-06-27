@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
 const UserModal = ({ user, onClose, onSave }) => {
   const [formData, setFormData] = useState({ ...user });
-
-  useEffect(() => {
+useEffect(() => {
     setFormData({ ...user });
   }, [user]);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -14,12 +11,10 @@ const UserModal = ({ user, onClose, onSave }) => {
       [name]: value,
     }));
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     onSave(formData);
   };
-
   return (
     <div className="modal">
       <div className="modal-content">

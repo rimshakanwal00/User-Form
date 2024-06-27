@@ -6,6 +6,10 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [isModalOpen, setModalOpen] = useState(false);
+ 
+
   // const addUser = (user) => {
   //   const updatedUsers = [...users, user];
   //   setUsers(updatedUsers);
@@ -27,11 +31,11 @@ export const UserProvider = ({ children }) => {
 const updateUser = (updatedUser) => {
   const updatedUsers = users.map((user) =>
     user.userid === updatedUser.userid? updatedUser : user
-  
   );
   setUsers(updatedUsers);
   localStorage.setItem('users', JSON.stringify(updatedUsers));
 };
+
 // for delt user data
 
 const deleteUser = (userid) => {
@@ -39,25 +43,14 @@ const deleteUser = (userid) => {
   setUsers(updatedUsers);
   localStorage.setItem('users', JSON.stringify(updatedUsers));
 };
-
  useEffect(() => {
-
     const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
     setUsers(storedUsers);
-// 
 const storedLastUserId = JSON.parse(localStorage.getItem('lastUserId')) || 0;
 setLastUserId(storedLastUserId);
-// 
-
-
   }, []);
-
-  
-  console.log(users);
-//   localStorage.clear();
-
   return (
-    <UserContext.Provider value={{ users, addUser,setUsers,updateUser,deleteUser }}>
+    <UserContext.Provider value={{ users, addUser,setUsers,updateUser,deleteUser,selectedUser, setSelectedUser,isModalOpen, setModalOpen }}>
       {children}
     </UserContext.Provider>
   );
